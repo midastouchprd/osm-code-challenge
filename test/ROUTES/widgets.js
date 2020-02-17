@@ -11,17 +11,6 @@ describe("WIDGET ROUTE TESTING", function() {
   before(async function() {
     await Widget.deleteMany({});
   });
-  describe("GET /widgets", function() {
-    it("should return all widgets", function(done) {
-      request(app)
-        .get("/widgets")
-        .end(function(err, res) {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.data).to.be.an("array");
-          done();
-        });
-    });
-  });
 
   describe("POST /widgets", function() {
     it("should create a widget", function(done) {
@@ -42,6 +31,17 @@ describe("WIDGET ROUTE TESTING", function() {
         .send(mockData.fakeWidgets.downRedCircle)
         .end(function(err, res) {
           expect(res.statusCode).to.equal(403);
+          done();
+        });
+    });
+  });
+  describe("GET /widgets", function() {
+    it("should return all widgets", function(done) {
+      request(app)
+        .get("/widgets")
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.data).to.be.an("array");
           done();
         });
     });

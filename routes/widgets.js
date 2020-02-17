@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Widget = require("../models/Widget");
 
-router.get("/", function(req, res) {
-  res.json({ data: "This is the widgets resource" });
+router.get("/", async function(req, res) {
+  let allWidgets = await Widget.find({});
+  return res.status(200).json({ data: allWidgets });
 });
 
 //create a widget

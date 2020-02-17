@@ -5,22 +5,11 @@ const app = require("../../server");
 const mockData = require("../../mockData");
 const mongoose = require("mongoose");
 const db = require("../../mongoose");
-const Instruction = require("../../models/Widget");
+const Instruction = require("../../models/Instruction");
 
 describe("INSTRUCTION ROUTE TESTING", function() {
   before(async function() {
     await Instruction.deleteMany({});
-  });
-  describe("GET /instructions", function() {
-    it("should return all instructions", function(done) {
-      request(app)
-        .get("/instructions")
-        .end(function(err, res) {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.data).to.be.an("array");
-          done();
-        });
-    });
   });
 
   describe("POST /instructions", function() {
@@ -44,6 +33,17 @@ describe("INSTRUCTION ROUTE TESTING", function() {
         .send(mockData.fakeInstructions.incomingSingle)
         .end(function(err, res) {
           expect(res.statusCode).to.equal(403);
+          done();
+        });
+    });
+  });
+  describe("GET /instructions", function() {
+    it("should return all instructions", function(done) {
+      request(app)
+        .get("/instructions")
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(200);
+          expect(res.body.data).to.be.an("array");
           done();
         });
     });

@@ -7,10 +7,12 @@
   "author": "Oluwatosin Awofeso <midastouchproductions@gmail.com>",
   "license": "none",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^3.21.2"
+    "helmet": "^3.21.2",
+    "mongoose": "^5.9.1"
   },
   "scripts": {
-    "start": "nodemon server.js --inspect"
+    "start": "nodemon --inspect"
   }
 }

@@ -1,0 +1,16 @@
+{
+  "name": "osm-code-challenge",
+  "version": "1.0.0",
+  "description": "Coding Challenge for Tosin at OSM",
+  "main": "server.js",
+  "repository": "https://github.com/midastouchprd/osm-code-challenge.git",
+  "author": "Oluwatosin Awofeso <midastouchproductions@gmail.com>",
+  "license": "none",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.21.2"
+  },
+  "scripts": {
+    "start": "nodemon server.js --inspect"
+  }
+}

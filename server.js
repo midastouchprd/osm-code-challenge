@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = 9050;
-module.exports = app;
+var bodyParser = require("body-parser");
 
 // DB Connection
 const mongoose = require("mongoose");
@@ -18,9 +18,17 @@ mongoose.connection
   })
   .on("open", () => {
     console.log("db connected");
-    app.listen(port, () => console.log(`Server Running on ${port}!`));
+    if (!module.parent) {
+      app.listen(port, () => console.log(`Server Running on ${port}!`));
+    }
   });
+
+//Middleware
+app.use(bodyParser.json());
 
 // Routes
 app.use("/instructions", require("./routes/instructions"));
 app.use("/widgets", require("./routes/widgets"));
+
+//Export app for testing
+module.exports = app;

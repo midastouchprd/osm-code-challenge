@@ -3,6 +3,7 @@ var expect = chai.expect;
 var sinon = require("sinon");
 var request = require("supertest");
 var app = require("../../server");
+var mockData = require("../../mockData");
 
 describe("GET /instructions", function() {
   it("should return instructions home", function(done) {

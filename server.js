@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = 9050;
+module.exports = app;
 
 // DB Connection
 const mongoose = require("mongoose");

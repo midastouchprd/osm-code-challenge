@@ -19,3 +19,7 @@ mongoose.connection
     console.log("db connected");
     app.listen(port, () => console.log(`Server Running on ${port}!`));
   });
+
+// Routes
+app.use("/instructions", require("./routes/instructions"));
+app.use("/widgets", require("./routes/widgets"));

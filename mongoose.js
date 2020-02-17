@@ -7,6 +7,10 @@ if (process.env.NODE_ENV !== "production") {
   uri = process.env.MONGO_DB_URI;
 }
 
+console.log("=========uri============");
+console.log(uri);
+console.log("====================================");
+
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true

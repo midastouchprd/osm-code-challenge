@@ -1,45 +1,23 @@
-var chai = require("chai");
-var expect = chai.expect;
-var sinon = require("sinon");
-var request = require("supertest");
-var app = require("../../server");
-var mockData = require("../../mockData");
-var mongoose = require("mongoose");
-var db = require("../../mongoose");
-function clearCollections(done) {
-  for (var collection in mongoose.connection.collections) {
-    mongoose.connection.collections[collection].deleteMany(function() {});
-  }
-  if (done) {
-    return done();
-  }
-  return;
-}
+const chai = require("chai");
+const expect = chai.expect;
+const request = require("supertest");
+const app = require("../../server");
+const mockData = require("../../mockData");
+const mongoose = require("mongoose");
+const db = require("../../mongoose");
+const Widget = require("../../models/Widget");
 
 describe("WIDGET ROUTE TESTING", function() {
-  before(function(done) {
-    if (mongoose.connection.readyState === 0) {
-      mongoose.connect(db, function(err) {
-        if (err) throw err;
-        return clearCollections(done);
-      });
-    } else {
-      return clearCollections(done);
-    }
-  });
-
-  after(function(done) {
-    clearCollections();
-    mongoose.disconnect();
-    return done();
+  before(async function() {
+    await Widget.deleteMany({});
   });
   describe("GET /widgets", function() {
-    it("should return widgets home", function(done) {
+    it("should return all widgets", function(done) {
       request(app)
         .get("/widgets")
         .end(function(err, res) {
           expect(res.statusCode).to.equal(200);
-          expect(res.body.data).to.equal("This is the widgets resource");
+          expect(res.body.data).to.be.an("array");
           done();
         });
     });

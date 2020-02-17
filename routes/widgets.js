@@ -8,13 +8,8 @@ router.get("/", function(req, res) {
 
 //create a widget
 router.post("/", async function(req, res) {
-  /* check that the widget is unique via shape + qualities
-   * if shape plus qualities is the same do not add otherwise add
-   */
+  // check that the widget is unique via shape + qualities
 
-  // TODO: make a transform function for this.
-  // TODO: if its not an array
-  // query the database for widgets with the same shape and same qualities
   let foundWidget = await Widget.exists({
     shape: req.body.shape,
     qualities: { $size: req.body.qualities.length, $all: req.body.qualities }

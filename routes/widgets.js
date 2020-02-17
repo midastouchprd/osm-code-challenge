@@ -12,31 +12,24 @@ router.post("/", async function(req, res) {
    * if shape plus qualities is the same do not add otherwise add
    */
 
-  // query the database for widgets with the same shape and same qualities
-
   // TODO: make a transform function for this.
   // TODO: if its not an array
-  let foundWidget = await Widget.find({
-    ...req.body,
+  // query the database for widgets with the same shape and same qualities
+  let foundWidget = await Widget.exists({
+    shape: req.body.shape,
     qualities: { $size: req.body.qualities.length, $all: req.body.qualities }
   });
 
-  console.log("=====found=====");
-  console.log(foundWidget);
-  console.log("====================================");
+  if (foundWidget) {
+    return res.status(403).json({ error: "Widget Already exists" });
+  }
 
   //create a widget in database
   let newWidget = new Widget(req.body);
   newWidget.save(err => {
     if (err) {
-      console.log("=====Widget create error=============");
-      console.log(err);
-      console.log("====================================");
       return res.status(403).json({ error: err });
     }
-    console.log("==========req.body===============");
-    console.log(req.body);
-    console.log("====================================");
     return res.status(201).json({ data: req.body });
   });
 });

@@ -6,27 +6,30 @@ var app = require("../../server");
 var mockData = require("../../mockData");
 var mongoose = require("mongoose");
 var db = require("../../mongoose");
+function clearCollections(done) {
+  for (var collection in mongoose.connection.collections) {
+    mongoose.connection.collections[collection].deleteMany(function() {});
+  }
+  if (done) {
+    return done();
+  }
+  return;
+}
 
 describe("WIDGET ROUTE TESTING", function() {
   before(function(done) {
-    function clearCollections() {
-      for (var collection in mongoose.connection.collections) {
-        mongoose.connection.collections[collection].remove(function() {});
-      }
-      return done();
-    }
-
     if (mongoose.connection.readyState === 0) {
       mongoose.connect(db, function(err) {
         if (err) throw err;
-        return clearCollections();
+        return clearCollections(done);
       });
     } else {
-      return clearCollections();
+      return clearCollections(done);
     }
   });
 
   after(function(done) {
+    clearCollections();
     mongoose.disconnect();
     return done();
   });

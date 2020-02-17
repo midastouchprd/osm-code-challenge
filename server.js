@@ -1,10 +1,13 @@
 // Packages
 require("dotenv").config();
 const express = require("express");
-const app = express();
-const port = 9050;
+const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const db = require("./mongoose");
+
+//Variables
+const app = express();
+const port = 9050;
 
 // DB Connection
 db.on("error", console.error.bind(console, "connection error:"));

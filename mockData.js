@@ -5,6 +5,11 @@ module.exports = {
       criteria: ["circle"],
       color: "pink"
     },
+    incomingSingleDUP: {
+      direction: "incoming",
+      criteria: ["circle"],
+      color: "blue"
+    },
     incomingMultiple: {
       direction: "incoming",
       criteria: ["circle", "down"],

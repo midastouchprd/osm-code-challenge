@@ -24,9 +24,22 @@ router.post("/", async function(req, res) {
 
   Instruction.collection.insertMany(instructions, (err, docs) => {
     if (err) {
-      return res.status(403).json({ err });
+      let newInstruction = err.op;
+      delete newInstruction._id;
+      Instruction.findOneAndUpdate(
+        { name: newInstruction.name },
+        newInstruction,
+        { upsert: true, useFindAndModify: false, new: true },
+        function(err, doc) {
+          if (err) {
+            return res.status(403).json({ err });
+          }
+          return res.status(201).json({ data: doc });
+        }
+      );
+    } else {
+      return res.status(201).json({ data: docs });
     }
-    return res.status(201).json({ data: docs.ops });
   });
 });
 

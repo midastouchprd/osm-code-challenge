@@ -38,8 +38,6 @@ router.put("/:id", async function(req, res) {
     { upsert: true, useFindAndModify: false, new: true },
     function(err, doc) {
       if (err) {
-        console.log(err);
-
         return res.status(403).json({ error: err });
       }
       return res.status(201).json({ data: doc });

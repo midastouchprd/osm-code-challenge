@@ -26,7 +26,7 @@ router.post("/", async function(req, res) {
     if (err) {
       return res.status(403).json({ error: err });
     }
-    return res.status(201).json({ data: req.body });
+    return res.status(201).json({ data: newWidget });
   });
 });
 

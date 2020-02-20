@@ -7,12 +7,12 @@ router.get("/", async function(req, res) {
   return res.status(200).json({ data: allInstructions });
 });
 
-router.post("/", async function(req, res) {
+router.post("/", async function({ body }, res) {
   // check that the instruction is unique via direction + criteria
 
   let foundInstruction = await Instruction.exists({
-    direction: req.body.direction,
-    criteria: { $size: req.body.criteria.length, $all: req.body.criteria }
+    direction: body.direction,
+    criteria: { $size: body.criteria.length, $all: body.criteria }
   });
 
   if (foundInstruction) {
@@ -20,12 +20,12 @@ router.post("/", async function(req, res) {
   }
 
   //create a instruction in database
-  let newInstruction = new Instruction(req.body);
+  let newInstruction = new Instruction(body);
   newInstruction.save(err => {
     if (err) {
       return res.status(403).json({ error: err });
     }
-    return res.status(201).json({ data: req.body });
+    return res.status(201).json({ data: newInstruction });
   });
 });
 

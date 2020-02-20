@@ -20,8 +20,14 @@ describe("INSTRUCTION ROUTE TESTING", function() {
         .send(mockData.fakeInstructions.incomingSingle)
         .end(function(err, res) {
           expect(res.statusCode).to.equal(201);
-          expect(res.body.data).to.eql(
-            mockData.fakeInstructions.incomingSingle
+          expect(res.body.data.color).to.eql(
+            mockData.fakeInstructions.incomingSingle.color
+          );
+          expect(res.body.data.criteria).to.eql(
+            mockData.fakeInstructions.incomingSingle.criteria
+          );
+          expect(res.body.data.direction).to.eql(
+            mockData.fakeInstructions.incomingSingle.direction
           );
           done();
         });
@@ -34,6 +40,44 @@ describe("INSTRUCTION ROUTE TESTING", function() {
         .end(function(err, res) {
           expect(res.statusCode).to.equal(403);
           done();
+        });
+    });
+  });
+
+  describe("PUT /instructions/:id", function() {
+    it("should update a instruction", function(done) {
+      this.timeout(30000);
+      // make a new instruction and save the id
+      request(app)
+        .post("/instructions")
+        .send(mockData.fakeInstructions.incomingMultiple)
+        .end(function(err, res) {
+          expect(res.statusCode).to.equal(201);
+          expect(res.body.data.color).to.eql(
+            mockData.fakeInstructions.incomingMultiple.color
+          );
+          expect(res.body.data.criteria).to.eql(
+            mockData.fakeInstructions.incomingMultiple.criteria
+          );
+          expect(res.body.data.direction).to.eql(
+            mockData.fakeInstructions.incomingMultiple.direction
+          );
+          request(app)
+            .put(`/instructions/${res.body.data._id}`)
+            .send(mockData.fakeInstructions.outgoingSingle)
+            .end(function(err, res2) {
+              expect(res2.statusCode).to.equal(201);
+              expect(res2.body.data.color).to.eql(
+                mockData.fakeInstructions.outgoingSingle.color
+              );
+              expect(res2.body.data.criteria).to.eql(
+                mockData.fakeInstructions.outgoingSingle.criteria
+              );
+              expect(res2.body.data.direction).to.eql(
+                mockData.fakeInstructions.outgoingSingle.direction
+              );
+              done();
+            });
         });
     });
   });

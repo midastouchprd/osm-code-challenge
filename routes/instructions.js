@@ -7,25 +7,26 @@ router.get("/", async function(req, res) {
   return res.status(200).json({ data: allInstructions });
 });
 
-router.post("/", async function({ body }, res) {
-  // check that the instruction is unique via direction + criteria
-
-  let foundInstruction = await Instruction.exists({
-    direction: body.direction,
-    criteria: { $size: body.criteria.length, $all: body.criteria }
-  });
-
-  if (foundInstruction) {
-    return res.status(403).json({ error: "Instruction Already exists" });
+router.post("/", async function(req, res) {
+  // check that the widget is unique via shape + qualities
+  if (!Array.isArray(req.body)) {
+    instructions = [req.body];
+  } else {
+    instructions = req.body;
   }
 
-  //create a instruction in database
-  let newInstruction = new Instruction(body);
-  newInstruction.save(err => {
+  instructions.map(instruction => {
+    instruction.name = `${
+      instruction.direction
+    } (${instruction.criteria.join()})`;
+    return instruction;
+  });
+
+  Instruction.collection.insertMany(instructions, (err, docs) => {
     if (err) {
-      return res.status(403).json({ error: err });
+      return res.status(403).json({ err });
     }
-    return res.status(201).json({ data: newInstruction });
+    return res.status(201).json({ data: docs.ops });
   });
 });
 

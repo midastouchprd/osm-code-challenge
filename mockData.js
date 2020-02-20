@@ -19,6 +19,11 @@ module.exports = {
       direction: "outgoing",
       criteria: ["circle", "down"],
       color: "red"
+    },
+    outgoingMultiple2: {
+      direction: "outgoing",
+      criteria: ["circle", "down", "up"],
+      color: "red"
     }
   },
   fakeWidgets: {
@@ -29,8 +34,13 @@ module.exports = {
     },
     upPinkTriangle: {
       color: "pink",
-      shape: "triange",
+      shape: "triangle",
       qualities: ["up"]
+    },
+    downPinkTriangle: {
+      color: "pink",
+      shape: "triangle",
+      qualities: ["down"]
     },
     strangeBottomYellowSquare: {
       color: "yellow",

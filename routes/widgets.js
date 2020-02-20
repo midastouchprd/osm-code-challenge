@@ -10,23 +10,22 @@ router.get("/", async function(req, res) {
 //create a widget
 router.post("/", async function(req, res) {
   // check that the widget is unique via shape + qualities
-
-  let foundWidget = await Widget.exists({
-    shape: req.body.shape,
-    qualities: { $size: req.body.qualities.length, $all: req.body.qualities }
-  });
-
-  if (foundWidget) {
-    return res.status(403).json({ error: "Widget Already exists" });
+  if (!Array.isArray(req.body)) {
+    widgets = [req.body];
+  } else {
+    widgets = req.body;
   }
 
-  //create a widget in database
-  let newWidget = new Widget(req.body);
-  newWidget.save(err => {
+  widgets.map(widget => {
+    widget.name = `${widget.shape} (${widget.qualities.join()})`;
+    return widget;
+  });
+
+  Widget.collection.insertMany(widgets, (err, docs) => {
     if (err) {
-      return res.status(403).json({ error: err });
+      return res.status(403).json({ err });
     }
-    return res.status(201).json({ data: newWidget });
+    return res.status(201).json({ data: docs.ops });
   });
 });
 //update a widget
@@ -39,6 +38,8 @@ router.put("/:id", async function(req, res) {
     { upsert: true, useFindAndModify: false, new: true },
     function(err, doc) {
       if (err) {
+        console.log(err);
+
         return res.status(403).json({ error: err });
       }
       return res.status(201).json({ data: doc });

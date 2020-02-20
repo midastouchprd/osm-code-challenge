@@ -64,15 +64,15 @@ describe("WIDGET ROUTE TESTING", function() {
           request(app)
             .put(`/widgets/${res.body.data._id}`)
             .send(mockData.fakeWidgets.upPinkTriangle)
-            .end(function(err, res) {
-              expect(res.statusCode).to.equal(201);
-              expect(res.body.data.color).to.eql(
+            .end(function(err, res2) {
+              expect(res2.statusCode).to.equal(201);
+              expect(res2.body.data.color).to.eql(
                 mockData.fakeWidgets.upPinkTriangle.color
               );
-              expect(res.body.data.qualities).to.eql(
+              expect(res2.body.data.qualities).to.eql(
                 mockData.fakeWidgets.upPinkTriangle.qualities
               );
-              expect(res.body.data.shape).to.eql(
+              expect(res2.body.data.shape).to.eql(
                 mockData.fakeWidgets.upPinkTriangle.shape
               );
               done();

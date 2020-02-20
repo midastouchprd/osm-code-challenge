@@ -29,4 +29,21 @@ router.post("/", async function({ body }, res) {
   });
 });
 
+//update a instruction
+router.put("/:id", async function(req, res) {
+  var query = { _id: req.params.id };
+
+  Instruction.findOneAndUpdate(
+    query,
+    req.body,
+    { upsert: true, useFindAndModify: false, new: true },
+    function(err, doc) {
+      if (err) {
+        return res.status(403).json({ error: err });
+      }
+      return res.status(201).json({ data: doc });
+    }
+  );
+});
+
 module.exports = router;

@@ -64,16 +64,16 @@ describe("INSTRUCTION ROUTE TESTING", function() {
           );
           request(app)
             .put(`/instructions/${res.body.data._id}`)
-            .send(mockData.fakeinstructions.outgoingSingle)
-            .end(function(err, res) {
-              expect(res.statusCode).to.equal(201);
-              expect(res.body.data.color).to.eql(
+            .send(mockData.fakeInstructions.outgoingSingle)
+            .end(function(err, res2) {
+              expect(res2.statusCode).to.equal(201);
+              expect(res2.body.data.color).to.eql(
                 mockData.fakeInstructions.outgoingSingle.color
               );
-              expect(res.body.data.criteria).to.eql(
+              expect(res2.body.data.criteria).to.eql(
                 mockData.fakeInstructions.outgoingSingle.criteria
               );
-              expect(res.body.data.direction).to.eql(
+              expect(res2.body.data.direction).to.eql(
                 mockData.fakeInstructions.outgoingSingle.direction
               );
               done();

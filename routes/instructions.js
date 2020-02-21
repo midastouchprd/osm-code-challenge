@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Instruction = require("../models/Instruction");
+const Widget = require("../models/Widget");
 
 router.get("/", async function(req, res) {
   let allInstructions = await Instruction.find({});
@@ -15,15 +16,19 @@ router.post("/", async function(req, res) {
     instructions = req.body;
   }
 
-  instructions.map(instruction => {
+  // create unique readable key for instructions
+  instructions.map(async instruction => {
     instruction.name = `${
       instruction.direction
     } (${instruction.criteria.join()})`;
     return instruction;
   });
 
-  Instruction.collection.insertMany(instructions, (err, docs) => {
+  // insert all the instructions
+  let savedInstructions = null;
+  await Instruction.collection.insertMany(instructions, async (err, docs) => {
     if (err) {
+      // if there is a bulkWriteError overwrite the instructions
       let newInstruction = err.op;
       delete newInstruction._id;
       Instruction.findOneAndUpdate(
@@ -34,12 +39,45 @@ router.post("/", async function(req, res) {
           if (err) {
             return res.status(403).json({ err });
           }
-          return res.status(201).json({ data: doc });
         }
       );
-    } else {
-      return res.status(201).json({ data: docs });
     }
+    var updates = [];
+    var transformWidget = {};
+    for (let i = 0; i < instructions.length; i++) {
+      let shape;
+      let qualities = [];
+      const instruction = instructions[i];
+
+      if (instruction.direction === "incoming") {
+        for (let j = 0; j < instruction.criteria.length; j++) {
+          let crit = instruction.criteria[j];
+
+          if (crit === "circle" || crit === "triangle" || crit === "square") {
+            shape = crit;
+          } else {
+            qualities.push(crit);
+          }
+        }
+        const widget = await Widget.findOne({ shape, qualities });
+        if (widget) {
+          transformWidget.before = widget;
+          const afterWidget = await Widget.findOneAndUpdate(
+            { shape, qualities },
+            { color: instruction.color },
+            { upsert: true, useFindAndModify: false, new: true }
+          ).catch(err => {
+            return res.status(403).json({ err });
+          });
+          transformWidget.after = afterWidget;
+          updates.push(transformWidget);
+        }
+      }
+    }
+
+    return res
+      .status(201)
+      .json({ data: instructions, transformations: updates });
   });
 });
 

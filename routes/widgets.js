@@ -1,9 +1,31 @@
 const express = require("express");
 const router = express.Router();
 const Widget = require("../models/Widget");
+const Instruction = require("../models/Instruction");
 
 router.get("/", async function(req, res) {
   let allWidgets = await Widget.find({});
+  var transformedWidgets = [];
+
+  //look for widget transformations
+  console.log("============LOOOOP========================");
+  for (let i = 0; i < allWidgets.length; i++) {
+    let transforms = {};
+    const widget = allWidgets[i];
+    transforms.before = widget;
+    widget.qualities.unshift(widget.shape);
+
+    let transformingInstruction = await Instruction.findOne({
+      criteria: { $size: widget.qualities.length, $all: widget.qualities },
+      direction: "outgoing"
+    });
+
+    if (transformingInstruction) {
+      transforms.after = { ...widget };
+    }
+  }
+  console.log("====================================");
+
   return res.status(200).json({ data: allWidgets });
 });
 

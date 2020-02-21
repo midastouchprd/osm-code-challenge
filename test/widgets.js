@@ -1,11 +1,11 @@
 const chai = require("chai");
 const expect = chai.expect;
 const request = require("supertest");
-const app = require("../../server");
-const mockData = require("../../mockData");
+const app = require("../server");
+const mockData = require("../mockData");
 const mongoose = require("mongoose");
-const db = require("../../mongoose");
-const Widget = require("../../models/Widget");
+const db = require("../mongoose");
+const Widget = require("../models/Widget");
 
 const {
   fakeWidgets: {

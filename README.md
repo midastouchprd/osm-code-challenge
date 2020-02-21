@@ -21,9 +21,9 @@ An instruction looks like this:
 
 ## Requirements
 
-- widgets and instructions should be submitted as posts and updates as puts
-- multiple widgets or instructions can be submitted at once
-- instructions have a unique key based on direction and criteria – new entries overwrite old ones
+- widgets and instructions should be submitted as posts and updates as puts DONE
+- multiple widgets or instructions can be submitted at once DONE
+- instructions have a unique key based on direction and criteria – new entries overwrite old ones DONE
 - an instruction dictates what color a widget should be colored based on the criteria
 - “incoming” means the widget should be updated before being committed to the db and saved in
   db

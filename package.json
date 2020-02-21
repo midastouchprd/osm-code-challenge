@@ -20,6 +20,6 @@
   },
   "scripts": {
     "start": "nodemon --inspect",
-    "test": "mocha --recursive"
+    "test": "mocha -w --recursive"
   }
 }

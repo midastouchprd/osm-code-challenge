@@ -35,8 +35,8 @@ An instruction looks like this:
   state of widget, and if the transformation occurred when it was ingoing or outgoing DONE
 - widgets and instructions should each be in their own collection DONE
 - widgets and instructions can be deleted by sending a delete request with its \_id DONE
-- widgets can be requested by shape and/or qualities or all
-- log files can be requested by color
+- widgets can be requested by shape and/or qualities or all DONE
+- log files can be requested by color DONE
 - all data should be in json except for logs which can be plain text DONE
 - use latest LTS of nodejs and express DONE
 - use mongodb v3.4 and latest mongoose DONE

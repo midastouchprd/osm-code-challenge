@@ -1,11 +1,12 @@
 const chai = require("chai");
 const expect = chai.expect;
 const request = require("supertest");
-const app = require("../../server");
-const mockData = require("../../mockData");
+const app = require("../server");
+const mockData = require("../mockData");
 const mongoose = require("mongoose");
-const db = require("../../mongoose");
-const Instruction = require("../../models/Instruction");
+const db = require("../mongoose");
+const Instruction = require("../models/Instruction");
+const Widget = require("../models/Widget");
 
 const {
   fakeInstructions: {
@@ -21,34 +22,39 @@ const {
 describe("INSTRUCTION ROUTE TESTING", function() {
   before(async function() {
     await Instruction.deleteMany({});
+    await Widget.deleteMany({});
+  });
+  after(async function() {
+    await Instruction.deleteMany({});
+    await Widget.deleteMany({});
   });
 
   describe("POST /instructions", function() {
     it("should create a instructions", function(done) {
-      this.timeout(30000);
+      this.timeout(15000);
       request(app)
         .post("/instructions")
         .send(incomingSingle)
         .end(function(err, res) {
           expect(res.statusCode).to.equal(201);
-          expect(res.body.data.ops[0].color).to.eql(incomingSingle.color);
-          expect(res.body.data.ops[0].criteria).to.eql(incomingSingle.criteria);
-          expect(res.body.data.ops[0].direction).to.eql(
-            incomingSingle.direction
-          );
+          expect(res.body.data[0].color).to.eql(incomingSingle.color);
+          expect(res.body.data[0].criteria).to.eql(incomingSingle.criteria);
+          expect(res.body.data[0].direction).to.eql(incomingSingle.direction);
           done();
         });
     });
     it("should overwrite instruction if its there", function(done) {
-      this.timeout(30000);
+      this.timeout(15000);
       request(app)
         .post("/instructions")
         .send(incomingSingleDUP)
         .end(function(err, res) {
           expect(res.statusCode).to.equal(201);
-          expect(res.body.data.color).to.eql(incomingSingleDUP.color);
-          expect(res.body.data.criteria).to.eql(incomingSingleDUP.criteria);
-          expect(res.body.data.direction).to.eql(incomingSingleDUP.direction);
+          expect(res.body.data[0].color).to.eql(incomingSingleDUP.color);
+          expect(res.body.data[0].criteria).to.eql(incomingSingleDUP.criteria);
+          expect(res.body.data[0].direction).to.eql(
+            incomingSingleDUP.direction
+          );
           request(app)
             .get("/instructions")
             .end((err, res2) => {
@@ -61,14 +67,14 @@ describe("INSTRUCTION ROUTE TESTING", function() {
     });
 
     it("should create multiple instructions", function(done) {
-      this.timeout(30000);
+      this.timeout(15000);
       request(app)
         .post("/instructions")
         .send([outgoingMultiple, outgoingMultiple2])
         .end(function(err, res) {
           expect(res.statusCode).to.equal(201);
-          expect(res.body.data.ops).to.be.an("array");
-          expect(res.body.data.ops.length).to.equal(2);
+          expect(res.body.data).to.be.an("array");
+          expect(res.body.data.length).to.equal(2);
           done();
         });
     });
@@ -76,22 +82,18 @@ describe("INSTRUCTION ROUTE TESTING", function() {
 
   describe("PUT /instructions/:id", function() {
     it("should update a instruction", function(done) {
-      this.timeout(30000);
+      this.timeout(15000);
       // make a new instruction and save the id
       request(app)
         .post("/instructions")
         .send(incomingMultiple)
         .end(function(err, res) {
           expect(res.statusCode).to.equal(201);
-          expect(res.body.data.ops[0].color).to.eql(incomingMultiple.color);
-          expect(res.body.data.ops[0].criteria).to.eql(
-            incomingMultiple.criteria
-          );
-          expect(res.body.data.ops[0].direction).to.eql(
-            incomingMultiple.direction
-          );
+          expect(res.body.data[0].color).to.eql(incomingMultiple.color);
+          expect(res.body.data[0].criteria).to.eql(incomingMultiple.criteria);
+          expect(res.body.data[0].direction).to.eql(incomingMultiple.direction);
           request(app)
-            .put(`/instructions/${res.body.data.ops[0]._id}`)
+            .put(`/instructions/${res.body.data[0]._id}`)
             .send(outgoingSingle)
             .end(function(err, res2) {
               expect(res2.statusCode).to.equal(201);

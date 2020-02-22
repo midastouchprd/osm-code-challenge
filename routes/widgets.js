@@ -1,10 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const Widget = require("../models/Widget");
+const Instruction = require("../models/Instruction");
+const helpers = require("../helpers/checkForOutgoingTransformation");
+const { checkForOutgoingTransformation } = helpers;
 
 router.get("/", async function(req, res) {
   let allWidgets = await Widget.find({});
-  return res.status(200).json({ data: allWidgets });
+  var transformedWidgets = [];
+
+  for (let i = 0; i < allWidgets.length; i++) {
+    const widget = allWidgets[i];
+    let transformation = await checkForOutgoingTransformation(widget);
+    if (transformation.after) {
+      transformedWidgets.push(transformation);
+    }
+  }
+
+  return res
+    .status(200)
+    .json({ data: allWidgets, transformations: transformedWidgets });
 });
 
 //create a widget

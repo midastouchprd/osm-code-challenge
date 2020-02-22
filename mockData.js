@@ -31,6 +31,28 @@ module.exports = {
       color: "red"
     }
   },
+  fakeTransformationTestInstructions: {
+    incomingCircleDownYellow: {
+      direction: "incoming",
+      criteria: ["circle", "down"],
+      color: "yellow"
+    },
+    incomingTriangleDownOrange: {
+      direction: "incoming",
+      criteria: ["triangle", "down"],
+      color: "orange"
+    },
+    incomingTriangleUpOrange: {
+      direction: "incoming",
+      criteria: ["triangle", "up"],
+      color: "orange"
+    },
+    outgoingSquareStrangeBottomGreen: {
+      direction: "outgoing",
+      criteria: ["square", "strange", "bottom"],
+      color: "green"
+    }
+  },
   fakeWidgets: {
     downRedCircle: {
       color: "red",
@@ -50,7 +72,7 @@ module.exports = {
     strangeBottomYellowSquare: {
       color: "yellow",
       shape: "square",
-      qualities: ["strange, bottom"]
+      qualities: ["strange", "bottom"]
     }
   }
 };

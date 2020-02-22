@@ -33,14 +33,11 @@ describe.only("WIDGET TRANSFORMATION TESTS", function() {
 
   describe("Incoming Instructions", function() {
     it("should update widgets in the database based on color of instruction", function(done) {
-      this.timeout(5000);
+      this.timeout(15000);
       request(app)
         .post("/widgets")
         .send(downRedCircle)
         .end(function(err, makeWidgetResponse) {
-          console.log("===============makeWidgetResponse=====================");
-          console.log(makeWidgetResponse.body);
-          console.log("====================================");
           request(app)
             .post("/instructions")
             .send(incomingCircleDownYellow)
@@ -70,101 +67,7 @@ describe.only("WIDGET TRANSFORMATION TESTS", function() {
         });
     });
     it("should work with multiples", function(done) {
-      this.timeout(5000);
-      request(app)
-        .post("/widgets")
-        .send(strangeBottomYellowSquare)
-        .end(function(err, makeWidgetResponse) {
-          request(app)
-            .post("/instructions")
-            .send([incomingTriangleDownOrange, incomingTriangleUpOrange])
-            .end(function(err, makeInstructionResponse) {
-              console.log(
-                "================makeInstructionResponse===================="
-              );
-              console.log(makeInstructionResponse.body);
-              console.log("====================================");
-              expect(makeInstructionResponse.statusCode).to.equal(201);
-              expect(
-                makeInstructionResponse.body.transformations[0].before.color
-              ).to.eql(downPinkTriangle.color);
-              expect(
-                makeInstructionResponse.body.transformations[0].after.color
-              ).to.eql(incomingTriangleDownOrange.color);
-              expect(
-                makeInstructionResponse.body.transformations[1].before.color
-              ).to.eql(upPinkTriangle.color);
-              expect(
-                makeInstructionResponse.body.transformations[1].after.color
-              ).to.eql(incomingTriangleUpOrange.color);
-
-              request(app)
-                .get("/widgets")
-                .end(function(err, getWidgetResponse) {
-                  //there should only be one widget that now has the color yellow
-                  expect(getWidgetResponse.statusCode).to.equal(200);
-                  expect(getWidgetResponse.body.data).to.be.an("array");
-                  expect(getWidgetResponse.body.data.length).to.eql(3);
-                  expect(getWidgetResponse.body.data[1].color).to.eql(
-                    incomingTriangleDownOrange.color
-                  );
-                  expect(getWidgetResponse.body.data[2].color).to.eql(
-                    incomingTriangleUpOrange.color
-                  );
-                  done();
-                });
-            });
-        });
-    });
-  });
-  describe("Outgoing Instructions", function() {
-    it("should return something different then the database", function(done) {
-      this.timeout(5000);
-      request(app)
-        .post("/widgets")
-        .send(strangeBottomYellowSquare)
-        .end(function(err, makeWidgetResponse) {
-          request(app)
-            .post("/instructions")
-            .send(outgoingSquareStrangeBottomGreen)
-            .end(function(err, makeInstructionResponse) {
-              //transformation should be empty
-              expect(makeInstructionResponse.statusCode).to.equal(201);
-              expect(makeInstructionResponse.body.transformations).to.be.an(
-                "array"
-              );
-              expect(
-                makeInstructionResponse.body.transformations.length
-              ).to.eql(0);
-              request(app)
-                .get("/widgets")
-                .end(function(err, getWidgetResponse) {
-                  console.log(
-                    "============getWidgetResponse========================"
-                  );
-                  console.log(getWidgetResponse.body);
-                  console.log("====================================");
-
-                  //there should only be one widget that now has the color yellow
-                  expect(getWidgetResponse.statusCode).to.equal(200);
-                  expect(getWidgetResponse.body.data).to.be.an("array");
-                  expect(getWidgetResponse.body.data.length).to.eql(4);
-                  expect(getWidgetResponse.body.data[3].color).to.eql(
-                    outgoingSquareStrangeBottomGreen.color
-                  );
-                  expect(
-                    getWidgetResponse.body.transformations[0].before.color
-                  ).to.eql(strangeBottomYellowSquare.color);
-                  expect(
-                    getWidgetResponse.body.transformations[0].after.color
-                  ).to.eql(outgoingSquareStrangeBottomGreen.color);
-                  done();
-                });
-            });
-        });
-    });
-    it("should work with multiples", function(done) {
-      this.timeout(5000);
+      this.timeout(15000);
       request(app)
         .post("/widgets")
         .send([downPinkTriangle, upPinkTriangle])
@@ -200,6 +103,50 @@ describe.only("WIDGET TRANSFORMATION TESTS", function() {
                   expect(getWidgetResponse.body.data[2].color).to.eql(
                     incomingTriangleUpOrange.color
                   );
+                  done();
+                });
+            });
+        });
+    });
+  });
+  describe("Outgoing Instructions", function() {
+    it("should return something different then the database", function(done) {
+      this.timeout(15000);
+      request(app)
+        .post("/widgets")
+        .send(strangeBottomYellowSquare)
+        .end(function(err, makeWidgetResponse) {
+          request(app)
+            .post("/instructions")
+            .send(outgoingSquareStrangeBottomGreen)
+            .end(function(err, makeInstructionResponse) {
+              //transformation should be empty
+              expect(makeInstructionResponse.statusCode).to.equal(201);
+              expect(makeInstructionResponse.body.transformations).to.be.an(
+                "array"
+              );
+              expect(
+                makeInstructionResponse.body.transformations.length
+              ).to.eql(0);
+              request(app)
+                .get("/widgets")
+                .end(function(err, getWidgetResponse) {
+                  console.log("====================================");
+                  console.log(getWidgetResponse.body);
+                  console.log("====================================");
+                  //there should only be one widget that now has the color yellow
+                  expect(getWidgetResponse.statusCode).to.equal(200);
+                  expect(getWidgetResponse.body.data).to.be.an("array");
+                  expect(getWidgetResponse.body.data.length).to.eql(4);
+                  expect(getWidgetResponse.body.data[3].color).to.eql(
+                    outgoingSquareStrangeBottomGreen.color
+                  );
+                  expect(
+                    getWidgetResponse.body.transformations[0].before.color
+                  ).to.eql(strangeBottomYellowSquare.color);
+                  expect(
+                    getWidgetResponse.body.transformations[0].after.color
+                  ).to.eql(outgoingSquareStrangeBottomGreen.color);
                   done();
                 });
             });

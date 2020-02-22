@@ -26,7 +26,7 @@ router.post("/", async function(req, res) {
 
   // insert all the instructions
   let savedInstructions = null;
-  await Instruction.collection.insertMany(instructions, async (err, docs) => {
+  Instruction.collection.insertMany(instructions, async (err, docs) => {
     if (err) {
       // if there is a bulkWriteError overwrite the instructions
       let newInstruction = err.op;
@@ -60,6 +60,7 @@ router.post("/", async function(req, res) {
           }
         }
         const widget = await Widget.findOne({ shape, qualities });
+
         if (widget) {
           transformWidget.before = widget;
           const afterWidget = await Widget.findOneAndUpdate(
@@ -69,15 +70,18 @@ router.post("/", async function(req, res) {
           ).catch(err => {
             return res.status(403).json({ err });
           });
-          transformWidget.after = afterWidget;
-          updates.push(transformWidget);
+          if (afterWidget) {
+            transformWidget.after = afterWidget;
+          }
         }
+        updates.push(transformWidget);
       }
     }
-
-    return res
-      .status(201)
-      .json({ data: instructions, transformations: updates });
+    return setTimeout(() => {
+      return res
+        .status(201)
+        .json({ data: instructions, transformations: updates });
+    }, 5000);
   });
 });
 

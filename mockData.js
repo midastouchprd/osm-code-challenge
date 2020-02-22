@@ -72,7 +72,7 @@ module.exports = {
     strangeBottomYellowSquare: {
       color: "yellow",
       shape: "square",
-      qualities: ["strange, bottom"]
+      qualities: ["strange", "bottom"]
     }
   }
 };

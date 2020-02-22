@@ -8,25 +8,41 @@ router.get("/", async function(req, res) {
   var transformedWidgets = [];
 
   //look for widget transformations
-  console.log("============LOOOOP========================");
   for (let i = 0; i < allWidgets.length; i++) {
     let transforms = {};
-    const widget = allWidgets[i];
-    transforms.before = widget;
-    widget.qualities.unshift(widget.shape);
+    let newCriteria = [];
+    const oldWidget = Object.assign({}, allWidgets[i]._doc);
+    transforms.before = oldWidget;
+    let newWidget = allWidgets[i];
+    newCriteria.push(newWidget.shape);
+    let qualities = newWidget.qualities;
+    for (let j = 0; j < qualities.length; j++) {
+      newCriteria.push(qualities[j]);
+    }
+
+    console.log("====================================");
+    console.log(newCriteria);
+    console.log("====================================");
 
     let transformingInstruction = await Instruction.findOne({
-      criteria: { $size: widget.qualities.length, $all: widget.qualities },
+      criteria: { $size: newCriteria.length, $all: newCriteria },
       direction: "outgoing"
     });
 
-    if (transformingInstruction) {
-      transforms.after = { ...widget };
-    }
-  }
-  console.log("====================================");
+    console.log("====================================");
+    console.log(transformingInstruction);
+    console.log("====================================");
 
-  return res.status(200).json({ data: allWidgets });
+    if (transformingInstruction) {
+      let newWidget = allWidgets[i];
+      newWidget.color = transformingInstruction.color;
+      transforms.after = newWidget;
+      transformedWidgets.push(transforms);
+    }
+    return res
+      .status(200)
+      .json({ data: allWidgets, transformations: transformedWidgets });
+  }
 });
 
 //create a widget

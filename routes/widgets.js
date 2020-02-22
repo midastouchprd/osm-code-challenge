@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Widget = require("../models/Widget");
 const Instruction = require("../models/Instruction");
-const helpers = require("../helpers/checkForOutgoingTransformation");
+const helpers = require("../helpers");
 const { checkForOutgoingTransformation } = helpers;
 
 router.get("/", async function(req, res) {
@@ -33,6 +33,8 @@ router.post("/", async function(req, res) {
 
   widgets.map(widget => {
     widget.name = `${widget.shape} (${widget.qualities.join()})`;
+    widget.createdAt = Date.now();
+    widget.updatedAt = Date.now();
     return widget;
   });
 

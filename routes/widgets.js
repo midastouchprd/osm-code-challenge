@@ -6,7 +6,31 @@ const helpers = require("../helpers");
 const { checkForOutgoingTransformation } = helpers;
 
 router.get("/", async function(req, res) {
-  let allWidgets = await Widget.find({});
+  const {
+    query: { shape, qualities }
+  } = req;
+  var allWidgets;
+  if (Object.entries(req.query).length === 0) {
+    allWidgets = await Widget.find({});
+  } else {
+    if (shape && qualities) {
+      allWidgets = await Widget.find({
+        shape,
+        qualities: {
+          $all: qualities.split(",")
+        }
+      });
+    } else if (shape) {
+      allWidgets = await Widget.find({ shape });
+    } else if (qualities) {
+      allWidgets = await Widget.find({
+        qualities: {
+          $size: qualities.split(",").length,
+          $all: qualities.split(",")
+        }
+      });
+    }
+  }
   var transformedWidgets = [];
 
   for (let i = 0; i < allWidgets.length; i++) {

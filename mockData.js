@@ -73,6 +73,11 @@ module.exports = {
       color: "yellow",
       shape: "square",
       qualities: ["strange", "bottom"]
+    },
+    deleteWidget: {
+      color: "fuschia",
+      shape: "triangle",
+      qualities: ["up", "bottom"]
     }
   }
 };

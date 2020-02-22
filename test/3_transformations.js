@@ -21,7 +21,7 @@ const {
   }
 } = mockData;
 
-describe.only("WIDGET TRANSFORMATION TESTS", function() {
+describe("WIDGET TRANSFORMATION TESTS", function() {
   before(async function() {
     await Instruction.deleteMany({});
     await Widget.deleteMany({});
@@ -131,9 +131,6 @@ describe.only("WIDGET TRANSFORMATION TESTS", function() {
               request(app)
                 .get("/widgets")
                 .end(function(err, getWidgetResponse) {
-                  console.log("====================================");
-                  console.log(getWidgetResponse.body);
-                  console.log("====================================");
                   //there should only be one widget that now has the color yellow
                   expect(getWidgetResponse.statusCode).to.equal(200);
                   expect(getWidgetResponse.body.data).to.be.an("array");

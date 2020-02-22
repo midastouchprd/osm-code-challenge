@@ -31,7 +31,7 @@ describe("INSTRUCTION ROUTE TESTING", function() {
 
   describe("POST /instructions", function() {
     it("should create a instructions", function(done) {
-      this.timeout(3500);
+      this.timeout(15000);
       request(app)
         .post("/instructions")
         .send(incomingSingle)
@@ -44,7 +44,7 @@ describe("INSTRUCTION ROUTE TESTING", function() {
         });
     });
     it("should overwrite instruction if its there", function(done) {
-      this.timeout(3500);
+      this.timeout(15000);
       request(app)
         .post("/instructions")
         .send(incomingSingleDUP)
@@ -67,7 +67,7 @@ describe("INSTRUCTION ROUTE TESTING", function() {
     });
 
     it("should create multiple instructions", function(done) {
-      this.timeout(5000);
+      this.timeout(15000);
       request(app)
         .post("/instructions")
         .send([outgoingMultiple, outgoingMultiple2])
@@ -82,7 +82,7 @@ describe("INSTRUCTION ROUTE TESTING", function() {
 
   describe("PUT /instructions/:id", function() {
     it("should update a instruction", function(done) {
-      this.timeout(5000);
+      this.timeout(15000);
       // make a new instruction and save the id
       request(app)
         .post("/instructions")

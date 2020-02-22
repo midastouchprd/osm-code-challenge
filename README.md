@@ -21,29 +21,29 @@ An instruction looks like this:
 
 ## Requirements
 
-- widgets and instructions should be submitted as posts and updates as puts
-- multiple widgets or instructions can be submitted at once
-- instructions have a unique key based on direction and criteria – new entries overwrite old ones
-- an instruction dictates what color a widget should be colored based on the criteria
+- widgets and instructions should be submitted as posts and updates as puts DONE
+- multiple widgets or instructions can be submitted at once DONE
+- instructions have a unique key based on direction and criteria – new entries overwrite old ones DONE
+- an instruction dictates what color a widget should be colored based on the criteria DONE
 - “incoming” means the widget should be updated before being committed to the db and saved in
-  db
+  db DONE
 - “outgoing” means the original widget is stored in the db, and the transformation only happens
-  when the widget is requested
-- each time a transformation happens, it needs to be added to a log file stored on the file system
-- there should be a separate log file for each color
+  when the widget is requested DONE
+- each time a transformation happens, it needs to be added to a log file stored on the file system DONE
+- there should be a separate log file for each color DONE
 - log entry should include datetime, the instruction used, original state of widget, transformed
-  state of widget, and if the transformation occurred when it was ingoing or outgoing
-- widgets and instructions should each be in their own collection
-- widgets and instructions can be deleted by sending a delete request with its \_id
+  state of widget, and if the transformation occurred when it was ingoing or outgoing DONE
+- widgets and instructions should each be in their own collection DONE
+- widgets and instructions can be deleted by sending a delete request with its \_id DONE
 - widgets can be requested by shape and/or qualities or all
 - log files can be requested by color
-- all data should be in json except for logs which can be plain text
-- use latest LTS of nodejs and express
-- use mongodb v3.4 and latest mongoose
+- all data should be in json except for logs which can be plain text DONE
+- use latest LTS of nodejs and express DONE
+- use mongodb v3.4 and latest mongoose DONE
 - use TDD/BDD for all development using mocha chai, and sinon if you need spies, stubs,
-  mocks, etc.
-- no front end is necessary, you can use postman to make requests
-- run server on port 9050
+  mocks, etc. DONE
+- no front end is necessary, you can use postman to make requests DONE
+- run server on port 9050 DONE
 
 ## Notes
 

@@ -7,10 +7,20 @@
   "author": "Oluwatosin Awofeso <midastouchproductions@gmail.com>",
   "license": "none",
   "dependencies": {
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^3.21.2"
+    "helmet": "^3.21.2",
+    "mocha": "^7.0.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.1",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.9.1",
+    "sinon": "^8.1.1",
+    "supertest": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon server.js --inspect"
+    "start": "nodemon --inspect",
+    "test": "mocha"
   }
 }

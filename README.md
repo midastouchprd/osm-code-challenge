@@ -29,10 +29,10 @@ An instruction looks like this:
   db DONE
 - “outgoing” means the original widget is stored in the db, and the transformation only happens
   when the widget is requested DONE
-- each time a transformation happens, it needs to be added to a log file stored on the file system
-- there should be a separate log file for each color
+- each time a transformation happens, it needs to be added to a log file stored on the file system DONE
+- there should be a separate log file for each color DONE
 - log entry should include datetime, the instruction used, original state of widget, transformed
-  state of widget, and if the transformation occurred when it was ingoing or outgoing
+  state of widget, and if the transformation occurred when it was ingoing or outgoing DONE
 - widgets and instructions should each be in their own collection DONE
 - widgets and instructions can be deleted by sending a delete request with its \_id
 - widgets can be requested by shape and/or qualities or all

@@ -29,6 +29,11 @@ module.exports = {
       direction: "outgoing",
       criteria: ["circle", "down", "up"],
       color: "red"
+    },
+    deleteInstruction: {
+      direction: "outgoing",
+      criteria: ["circle", "strange", "up"],
+      color: "purple"
     }
   },
   fakeTransformationTestInstructions: {
@@ -73,6 +78,11 @@ module.exports = {
       color: "yellow",
       shape: "square",
       qualities: ["strange", "bottom"]
+    },
+    deleteWidget: {
+      color: "fuschia",
+      shape: "triangle",
+      qualities: ["up", "bottom"]
     }
   }
 };

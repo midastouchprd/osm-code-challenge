@@ -62,4 +62,16 @@ router.put("/:id", async function(req, res) {
   );
 });
 
+//delete a widget
+router.delete("/:id", async function(req, res) {
+  var query = { _id: req.params.id };
+
+  Widget.findOneAndDelete(query, function(err, doc) {
+    if (err) {
+      return res.status(403).json({ error: err });
+    }
+    return res.status(201).json({ data: `deleted ${doc.name}` });
+  });
+});
+
 module.exports = router;

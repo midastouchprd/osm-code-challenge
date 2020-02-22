@@ -29,6 +29,11 @@ module.exports = {
       direction: "outgoing",
       criteria: ["circle", "down", "up"],
       color: "red"
+    },
+    deleteInstruction: {
+      direction: "outgoing",
+      criteria: ["circle", "strange", "up"],
+      color: "purple"
     }
   },
   fakeTransformationTestInstructions: {

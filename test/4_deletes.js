@@ -10,7 +10,7 @@ const {
   fakeWidgets: { deleteWidget },
   fakeInstructions: { deleteInstruction }
 } = mockData;
-describe.only("DELETE TESTING", function() {
+describe("DELETE TESTING", function() {
   before(async function() {
     await Instruction.deleteMany({});
     await Widget.deleteMany({});

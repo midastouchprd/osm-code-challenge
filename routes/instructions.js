@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 const Instruction = require("../models/Instruction");
 const Widget = require("../models/Widget");
+const helpers = require("../helpers/checkForOutgoingTransformation");
+const { logTransformation } = helpers;
 
 router.get("/", async function(req, res) {
   let allInstructions = await Instruction.find({});
@@ -75,6 +77,7 @@ router.post("/", async function(req, res) {
           });
           if (afterWidget) {
             transformWidget.after = afterWidget;
+            logTransformation(transformWidget, instruction);
           }
         }
         updates.push(transformWidget);

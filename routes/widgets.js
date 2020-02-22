@@ -3,7 +3,7 @@ const router = express.Router();
 const Widget = require("../models/Widget");
 const Instruction = require("../models/Instruction");
 const helpers = require("../helpers/checkForOutgoingTransformation");
-const { checkForOutgoingTransformation } = helpers;
+const { checkForOutgoingTransformation, logTransformation } = helpers;
 
 router.get("/", async function(req, res) {
   let allWidgets = await Widget.find({});

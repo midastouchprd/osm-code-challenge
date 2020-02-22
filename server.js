@@ -22,11 +22,13 @@ db.on("open", () => {
 });
 
 //Middleware
+app.use(express.static("logs"));
 app.use(bodyParser.json());
 
 // Routes
 app.use("/instructions", require("./routes/instructions"));
 app.use("/widgets", require("./routes/widgets"));
+app.use("/logs", require("./routes/logs"));
 
 //Export app for testing
 module.exports = app;

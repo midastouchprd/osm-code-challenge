@@ -34,7 +34,7 @@ An instruction looks like this:
 - log entry should include datetime, the instruction used, original state of widget, transformed
   state of widget, and if the transformation occurred when it was ingoing or outgoing DONE
 - widgets and instructions should each be in their own collection DONE
-- widgets and instructions can be deleted by sending a delete request with its \_id
+- widgets and instructions can be deleted by sending a delete request with its \_id DONE
 - widgets can be requested by shape and/or qualities or all
 - log files can be requested by color
 - all data should be in json except for logs which can be plain text DONE

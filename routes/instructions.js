@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const Instruction = require("../models/Instruction");
 const Widget = require("../models/Widget");
-const helpers = require("../helpers/checkForOutgoingTransformation");
+const helpers = require("../helpers");
 const { logTransformation } = helpers;
 
 router.get("/", async function(req, res) {

@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Widget = require("../models/Widget");
 const Instruction = require("../models/Instruction");
-const helpers = require("../helpers/checkForOutgoingTransformation");
-const { checkForOutgoingTransformation, logTransformation } = helpers;
+const helpers = require("../helpers");
+const { checkForOutgoingTransformation } = helpers;
 
 router.get("/", async function(req, res) {
   let allWidgets = await Widget.find({});

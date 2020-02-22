@@ -1,5 +1,5 @@
-const Widget = require("../models/Widget");
-const Instruction = require("../models/Instruction");
+const Widget = require("./models/Widget");
+const Instruction = require("./models/Instruction");
 const moment = require("moment");
 const fs = require("fs");
 

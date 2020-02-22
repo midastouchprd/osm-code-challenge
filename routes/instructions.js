@@ -18,9 +18,12 @@ router.post("/", async function(req, res) {
 
   // create unique readable key for instructions
   instructions.map(async instruction => {
+    instruction.createdAt = Date.now();
+    instruction.updatedAt = Date.now();
     instruction.name = `${
       instruction.direction
     } (${instruction.criteria.join()})`;
+
     return instruction;
   });
 

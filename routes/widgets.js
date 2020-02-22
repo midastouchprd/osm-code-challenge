@@ -33,6 +33,8 @@ router.post("/", async function(req, res) {
 
   widgets.map(widget => {
     widget.name = `${widget.shape} (${widget.qualities.join()})`;
+    widget.createdAt = Date.now();
+    widget.updatedAt = Date.now();
     return widget;
   });
 

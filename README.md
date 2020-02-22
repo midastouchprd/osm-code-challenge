@@ -26,9 +26,9 @@ An instruction looks like this:
 - instructions have a unique key based on direction and criteria – new entries overwrite old ones DONE
 - an instruction dictates what color a widget should be colored based on the criteria DONE
 - “incoming” means the widget should be updated before being committed to the db and saved in
-  db
+  db DONE
 - “outgoing” means the original widget is stored in the db, and the transformation only happens
-  when the widget is requested
+  when the widget is requested DONE
 - each time a transformation happens, it needs to be added to a log file stored on the file system
 - there should be a separate log file for each color
 - log entry should include datetime, the instruction used, original state of widget, transformed
